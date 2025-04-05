@@ -15,7 +15,7 @@ services:
       - key: JWT_SECRET
         sync: false
       - key: CLIENT_URL
-        value: https://lars-workout-app.onrender.com
+        value: https://www.baselinetopsport.com/workout
 
   # Frontend service
   - type: web
@@ -25,4 +25,6 @@ services:
     staticPublishPath: client/build
     envVars:
       - key: REACT_APP_API_URL
-        value: https://lars-workout-api.onrender.com 
+        value: https://www.baselinetopsport.com/workout/api
+      - key: PUBLIC_URL
+        value: /workout 
