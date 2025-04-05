@@ -1,0 +1,28 @@
+services:
+  # Backend API service
+  - type: web
+    name: lars-workout-api
+    env: node
+    buildCommand: cd production && npm install
+    startCommand: cd production && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_URL
+        value: https://lars-workout-app.onrender.com
+
+  # Frontend service
+  - type: web
+    name: lars-workout-app
+    env: static
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: client/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://lars-workout-api.onrender.com 
