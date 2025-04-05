@@ -17,13 +17,13 @@ const theme = createTheme({
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('token');
-  return token ? children : <Navigate to="/" />;
+  return token ? children : <Navigate to="/workout" />;
 };
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Router>
+      <Router basename="/workout">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route
