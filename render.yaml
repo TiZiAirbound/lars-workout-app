@@ -21,10 +21,27 @@ services:
   - type: web
     name: lars-workout-app
     env: static
-    buildCommand: cd client && npm install && npm run build
+    buildCommand: >
+      cd client &&
+      npm install &&
+      sed -i 's/"homepage": ".*"/"homepage": "."/' package.json &&
+      REACT_APP_BASE_PATH="" PUBLIC_URL="" NODE_ENV=development npm run build &&
+      echo '<!DOCTYPE html><html><head><base href="/"><script>window.location.pathname === "/" || window.location.pathname === "" ? null : window.location.replace("/")</script></head><body><div id="root"></div></body></html>' > build/200.html
     staticPublishPath: client/build
-    envVars:
-      - key: REACT_APP_API_URL
-        value: https://www.baselinetopsport.com/workout/api
-      - key: PUBLIC_URL
-        value: /workout 
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: Content-Type
+        value: text/html
+      - path: /static/js/*
+        name: Content-Type
+        value: application/javascript
+      - path: /static/css/*
+        name: Content-Type
+        value: text/css
+      - path: /manifest.json
+        name: Content-Type
+        value: application/json 
