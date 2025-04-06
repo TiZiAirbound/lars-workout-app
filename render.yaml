@@ -24,9 +24,8 @@ services:
     buildCommand: >
       cd client &&
       npm install &&
-      sed -i 's/"homepage": ".*"/"homepage": "."/' package.json &&
-      REACT_APP_BASE_PATH="" PUBLIC_URL="" NODE_ENV=development npm run build &&
-      echo '<!DOCTYPE html><html><head><base href="/"><script>window.location.pathname === "/" || window.location.pathname === "" ? null : window.location.replace("/")</script></head><body><div id="root"></div></body></html>' > build/200.html
+      REACT_APP_DEBUG=true npm run build &&
+      echo "<!DOCTYPE html><html><head><title>Lars Workout</title></head><body><div id='root'></div><script>console.log('Debug: App mounting...')</script></body></html>" > build/debug.html
     staticPublishPath: client/build
     routes:
       - type: rewrite
